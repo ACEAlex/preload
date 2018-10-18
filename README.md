@@ -10,7 +10,7 @@ our testprog.
 Normal execution steps
 ======================
 
-A very simplified explanaton of what happens when system
+A very simplified explanation of what happens when system
 starts/executes our testprog. I.e. the following command
 is issued. **./testprog**
 
@@ -35,7 +35,7 @@ testprog
 Injecting our code via LD_PRELOAD
 =================================
 LD_PRELOAD instructs loader to **PRELOAD** a shared library
-before doing the normal loading rutine. This enable us to inject
+before doing the normal loading routine. This enable us to inject
 our own code in the execution.
 
 LD_PRELOAD=./haxer.so ./testprog
@@ -49,7 +49,7 @@ testprog
            fopen in haxer.so
 
 
-But wait! Wouldnt it be great if we also could call the original 
+But wait! Wouldn't it be great if we also could call the original 
 fopen code from our code? Like this
 
 testprog
@@ -65,6 +65,6 @@ testprog
                    V
           fopen in libc.so.6
                
-And yes we can. Lets se how.
+And yes we can. Lets see how.
 
 /Alexander Saers

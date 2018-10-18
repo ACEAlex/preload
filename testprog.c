@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 
 	printf("If you roll 6 on a die ten times you win a price!\n");
 
-	// Init rand generator.
+	// Init random generator.
 	srand(time(NULL));
 
 	for(int i = 1; i <= 10; ++i)

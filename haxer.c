@@ -9,16 +9,6 @@
 static FILE* (*real_fopen)(const char* path, const char* mode) = 0;
 static char* (*real_fgets)(char *s, int size, FILE *stream) = 0;
 
-// The following macro is kind of equal to doing the following
-// LOAD_FUNC(fopen)  equals to.
-// real_fopen = dlsym(RTLD_NEXT, fopen);
-#define LOAD_FUNC(name) \
-  do { \
-    *(void**) (&real_##name) = dlsym(RTLD_NEXT, #name); \
-    assert(real_##name); \
-  } while(false)
-
-
 static void load_functions(void){
 	// We use lazy initialization. Just initialize once 
 	static volatile bool loaded = false;
@@ -27,11 +17,25 @@ static void load_functions(void){
 		return; // if so just return.
 
 	// OK, lets query for the original shared symbols
-	LOAD_FUNC(fopen);
-	LOAD_FUNC(fgets);
+	real_fopen = dlsym(RTLD_NEXT, "fopen");
+	real_fgets = dlsym(RTLD_NEXT, "fgets");
 
 	loaded = true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -49,8 +53,8 @@ char *fgets(char *s, int size, FILE *stream)
 	printf("**HAXER**: fgets was called with size=%d\n", size);
 	return real_fgets(s, size, stream);
 }
-
 */
+
 
 
 
@@ -180,6 +184,15 @@ char *fgets(char *s, int size, FILE *stream)
 }
 
 */
+
+
+
+
+
+
+
+
+
 
 
 //Part4: Lets inject some code to fix the random number generator
