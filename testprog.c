@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 
 	if (!fd)
 	{
-		printf("Licens key not found!\nYou are not authorized!\n");
+		printf("License key not found!\nYou are not authorized!\n");
 		return -1;
 	}
 
