@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 		int die = rand()%6;
 
 		if (die == 0){ // 0 is equivalent to  6
-			printf("Great roll %d was a 6\n", i);
+			printf("Roll %d: Great! It was a 6\n", i);
 		}
 		else
 		{
