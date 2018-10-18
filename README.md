@@ -1,4 +1,4 @@
-#Having fun with LD_PRELOAD
+# Having fun with LD_PRELOAD
 
 All code can be found on github. 
 
@@ -12,11 +12,11 @@ Normal execution steps
 
 A very simplified explanaton of what happens when system
 starts/executes our testprog. I.e. the following command
-is issued. ./testprog
+is issued. **./testprog**
 
-1. System loads our binary testprog
+1. System loads our binary **testprog**
 2. Some of the symbols (fopen, fgets, rand) are dynamically
-   loaded as shared libraries. They are in testprog "undefined"
+   loaded as shared libraries. They are in testprog *undefined*
    and the dynamic linker will find and load the shared library.
    It will then bind the corresponding shared-lib function in the code.
 3. Execution is started.
@@ -34,7 +34,7 @@ testprog
 
 Injecting our code via LD_PRELOAD
 =================================
-LD_PRELOAD instructs loader to "PRELOAD" a shared library
+LD_PRELOAD instructs loader to **PRELOAD** a shared library
 before doing the normal loading rutine. This enable us to inject
 our own code in the execution.
 
