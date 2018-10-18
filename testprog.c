@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 {
 	printf("Hello world\n");
 
-	FILE* fd = fopen("/tmp/secret.key", "r");
+	FILE* fd = fopen("/noaccess/secret.key", "r");
 
 	if (!fd)
 	{
