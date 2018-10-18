@@ -5,8 +5,7 @@
 #include <assert.h>
 #include <string.h>
 
-// The following function pointers points to the original function. Example: compare with "man 2 open".
-static int (*real_open)(const char* pathname, int flags) = 0;
+// The following function pointers points to the original function. Example: compare with "man 2 fopen".
 static FILE* (*real_fopen)(const char* path, const char* mode) = 0;
 static char* (*real_fgets)(char *s, int size, FILE *stream) = 0;
 
@@ -28,7 +27,6 @@ static void load_functions(void){
 		return; // if so just return.
 
 	// OK, lets query for the original shared symbols
-	LOAD_FUNC(open);
 	LOAD_FUNC(fopen);
 	LOAD_FUNC(fgets);
 
@@ -185,6 +183,7 @@ char *fgets(char *s, int size, FILE *stream)
 */
 
 //Part4: Lets try open so we can see if this runs with for example "cat"
+/*
 int open(char* pathname, int flags)
 {
 	load_functions(); // Lazy initialization
@@ -200,3 +199,4 @@ int open(char* pathname, int flags)
 
 	return real_open(pathname, flags);
 }
+*/
