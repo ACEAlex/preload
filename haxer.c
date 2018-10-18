@@ -8,6 +8,7 @@
 // The following function pointers points to the original function. Example: compare with "man 2 fopen".
 static FILE* (*real_fopen)(const char* path, const char* mode) = 0;
 static char* (*real_fgets)(char *s, int size, FILE *stream) = 0;
+static int (*real_open)(const char* pathname, int flags) = 0;
 
 static void load_functions(void){
 	// We use lazy initialization. Just initialize once 
@@ -19,8 +20,9 @@ static void load_functions(void){
 	// OK, lets query for the original shared symbols
 	real_fopen = dlsym(RTLD_NEXT, "fopen");
 	real_fgets = dlsym(RTLD_NEXT, "fgets");
+	real_open = dlsym(RTLD_NEXT, "open");
 
-	loaded = true;
+	loaded = true; // prevent this from happening again
 }
 
 
@@ -204,8 +206,8 @@ char *fgets(char *s, int size, FILE *stream)
 }
 */
 
-//Part5: Lets try open so we can see if this runs with for example "cat"
 /*
+//Part5: Lets try open so we can see if this runs with for example "cat"
 int open(char* pathname, int flags)
 {
 	load_functions(); // Lazy initialization
@@ -213,12 +215,8 @@ int open(char* pathname, int flags)
 
 	if (strcmp(pathname, "/noaccess/secret.key")) // Only change the file we want
 		return real_open(pathname, flags);
-	else
-	{
-		printf("**HAXER**: replacing path to /home/alex/preload/fake.key\n");
-		return real_open("/etc/passwd", flags);
-	}
 
-	return real_open(pathname, flags);
+	printf("**HAXER**: replacing path to /etc/passwd\n");
+	return real_open("/etc/passwd", flags);
 }
 */
