@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 int main(int argc, char** argv)
 {
@@ -31,6 +33,27 @@ int main(int argc, char** argv)
 	}
 
 	printf("System init completed. Access granted! Welcome user!\n\n");
+
+	printf("If you roll 6 on a die ten times you win a price!\n");
+
+	// Init rand generator.
+	srand(time(NULL));
+
+	for(int i = 1; i <= 10; ++i)
+	{
+		int die = rand()%6;
+
+		if (die == 0){ // 0 is equivalent to  6
+			printf("Great roll %d was a 6\n", i);
+		}
+		else
+		{
+			printf("Sorry you did not win!\n");
+			return -1;
+		}
+	}
+
+	printf("We have a winner! Infinite fame and glory to you!\n\n");
 
 	return 0;
 }

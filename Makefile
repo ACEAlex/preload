@@ -1,7 +1,6 @@
 
-CFLAGS += -O2 -ggdb -Wall
-LDFLAGS += -Wl,--no-as-needed -rdynamic
-SO_FLAGS := -ggdb -Wall -fPIC -shared -Wl,--no-as-needed -ldl
+CFLAGS +=-O2 -ggdb -Wall
+SO_FLAGS :=-ggdb -Wall -fPIC -shared -Wl,--no-as-needed -ldl
 
 all: testprog
 	gcc $(SO_FLAGS) -o haxer.so haxer.c

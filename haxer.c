@@ -10,8 +10,8 @@ static FILE* (*real_fopen)(const char* path, const char* mode) = 0;
 static char* (*real_fgets)(char *s, int size, FILE *stream) = 0;
 
 // The following macro is kind of equal to doing the following
-// LOAD_FUNC(open)  equals to.
-// real_open = dlsym(RTLD_NEXT, open);
+// LOAD_FUNC(fopen)  equals to.
+// real_fopen = dlsym(RTLD_NEXT, fopen);
 #define LOAD_FUNC(name) \
   do { \
     *(void**) (&real_##name) = dlsym(RTLD_NEXT, #name); \
@@ -49,8 +49,8 @@ char *fgets(char *s, int size, FILE *stream)
 	printf("**HAXER**: fgets was called with size=%d\n", size);
 	return real_fgets(s, size, stream);
 }
-*/
 
+*/
 
 
 
@@ -109,7 +109,7 @@ FILE* fopen(const char* path, const char* mode)
 	load_functions(); // Lazy initialization
 	printf("**HAXER**: fopen was called with path=%s\n", path);
 	
-	if (strcmp(path, "/tmp/secret.key")) // Only change the file we want
+	if (strcmp(path, "/noaccess/secret.key")) // Only change the file we want
 		return real_fopen(path, mode);
 	else
 	{
@@ -154,7 +154,7 @@ FILE* fopen(const char* path, const char* mode)
 	load_functions(); // Lazy initialization
 	printf("**HAXER**: fopen was called with path=%s\n", path);
 	
-	if (strcmp(path, "/tmp/secret.key")) // Only change the file we want
+	if (strcmp(path, "/noaccess/secret.key")) // Only change the file we want
 		return real_fopen(path, mode);
 	else
 	{
@@ -179,17 +179,26 @@ char *fgets(char *s, int size, FILE *stream)
 	return real_fgets(s, size, stream);
 }
 
-
 */
 
-//Part4: Lets try open so we can see if this runs with for example "cat"
+
+//Part4: Lets inject some code to fix the random number generator
+/*int rand()
+{
+	load_functions(); // Lazy initialization
+	printf("**HAXER**: rand called\n");
+	return 6;
+}
+*/
+
+//Part5: Lets try open so we can see if this runs with for example "cat"
 /*
 int open(char* pathname, int flags)
 {
 	load_functions(); // Lazy initialization
 	printf("**HAXER**: open was called with pathname=%s flags=%d\n", pathname, flags);
 
-	if (strcmp(pathname, "/tmp/secret.key")) // Only change the file we want
+	if (strcmp(pathname, "/noaccess/secret.key")) // Only change the file we want
 		return real_open(pathname, flags);
 	else
 	{
